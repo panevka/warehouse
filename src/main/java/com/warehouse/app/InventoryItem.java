@@ -28,4 +28,36 @@ public class InventoryItem {
 		this.available -= qty;
 		this.reserved += qty;
 	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	public int getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(int available) {
+		this.available = available;
+	}
+
+	public int getReserved() {
+		return reserved;
+	}
+
+	public void setReserved(int reserved) {
+		this.reserved = reserved;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
+	}
 }
