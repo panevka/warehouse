@@ -1,4 +1,4 @@
-package com.warehouse.app;
+package com.warehouse.app.inventory;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

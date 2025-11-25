@@ -1,6 +1,9 @@
-package com.warehouse.app;
+package com.warehouse.app.inventory;
 
 import org.springframework.stereotype.Service;
+
+import com.warehouse.app.event.DomainEventDto;
+import com.warehouse.app.event.DomainEventService;
 
 @Service
 class InventoryService {

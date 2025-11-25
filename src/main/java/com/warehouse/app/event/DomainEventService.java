@@ -1,11 +1,11 @@
-package com.warehouse.app;
+package com.warehouse.app.event;
 
 import java.time.Instant;
 
 import org.springframework.stereotype.Service;
 
 @Service
-class DomainEventService {
+public class DomainEventService {
 
 	DomainEventRepository domainEventRepository;
 

@@ -1,9 +1,9 @@
-package com.warehouse.app;
+package com.warehouse.app.inventory;
 
 import java.util.Optional;
 
 import org.springframework.data.repository.Repository;
 
-interface InventoryRepository extends Repository<InventoryItem, String> {
+public interface InventoryRepository extends Repository<InventoryItem, String> {
 	Optional<InventoryItem> findBySku(String sku);
 }

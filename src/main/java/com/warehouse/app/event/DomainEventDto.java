@@ -1,6 +1,6 @@
-package com.warehouse.app;
+package com.warehouse.app.event;
 
-class DomainEventDto {
+public class DomainEventDto {
 
 	String sku;
 	String type;

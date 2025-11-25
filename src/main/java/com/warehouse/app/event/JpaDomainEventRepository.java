@@ -1,4 +1,4 @@
-package com.warehouse.app;
+package com.warehouse.app.event;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

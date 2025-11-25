@@ -1,4 +1,4 @@
-package com.warehouse.app;
+package com.warehouse.app.inventory;
 
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,4 @@
-
-package com.warehouse.app;
+package com.warehouse.app.event;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
