@@ -15,5 +15,7 @@ class InventoryService {
 				.orElseThrow(() -> new RuntimeException("Item not found"));
 
 		item.reserve(qty);
+
+		inventoryRepository.save(item);
 	}
 }
