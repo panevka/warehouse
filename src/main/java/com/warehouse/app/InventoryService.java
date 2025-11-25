@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 @Service
 class InventoryService {
 	InventoryRepository inventoryRepository;
+	DomainEventService eventService;
 
-	public InventoryService(InventoryRepository inventoryRepository) {
+	InventoryService(InventoryRepository inventoryRepository, DomainEventService eventService) {
 		this.inventoryRepository = inventoryRepository;
+		this.eventService = eventService;
 	}
 
 	void reserve(String sku, int qty) {
@@ -17,5 +19,8 @@ class InventoryService {
 		item.reserve(qty);
 
 		inventoryRepository.save(item);
+		DomainEventDto event = new DomainEventDto(item.getSku(), "InventoryReserved",
+				"{\"sku\":\"" + sku + "\", \"qty\":" + qty + "}");
+		eventService.publishEvent(event);
 	}
 }
