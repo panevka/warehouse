@@ -2,11 +2,16 @@ package com.warehouse.app.inventory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class InventoryItem {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int id;
+	@Column
 	String sku;
 	@Column
 	int available;
