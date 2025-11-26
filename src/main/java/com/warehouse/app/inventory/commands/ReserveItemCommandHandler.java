@@ -15,7 +15,6 @@ public class ReserveItemCommandHandler implements CommandHandler<ReserveItemResu
 	@PersistenceContext
 	private EntityManager em;
 
-	@Transactional
 	public ReserveItemResult handle(ReserveItemCommand command) {
 		var entitiesUpdated = em.createQuery("""
 				    UPDATE InventoryItem i
@@ -28,6 +27,7 @@ public class ReserveItemCommandHandler implements CommandHandler<ReserveItemResu
 				.setParameter("sku", command.getSku())
 				.setParameter("version", command.getExpectedVersion())
 				.executeUpdate();
+		em.clear();
 
 		if (entitiesUpdated == 1) {
 			var result = new ReserveItemResult();
