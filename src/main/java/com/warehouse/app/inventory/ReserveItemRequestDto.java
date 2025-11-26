@@ -1,19 +1,10 @@
 package com.warehouse.app.inventory;
 
-class ReserveItemDto {
+public class ReserveItemRequestDto {
 	private int qty;
-	private String sku;
 
 	public int getQty() {
 		return qty;
-	}
-
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
-
-	public String getSku() {
-		return this.sku;
 	}
 
 	public void setQty(int qty) {

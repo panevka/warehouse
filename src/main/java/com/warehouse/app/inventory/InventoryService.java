@@ -4,43 +4,57 @@ import org.springframework.stereotype.Service;
 
 import com.warehouse.app.event.DomainEventDto;
 import com.warehouse.app.event.DomainEventService;
+import com.warehouse.app.inventory.commands.ReserveItemCommand;
+import com.warehouse.app.inventory.commands.ReserveItemCommandHandler;
 
 @Service
 class InventoryService {
 	InventoryRepository inventoryRepository;
 	DomainEventService eventService;
-	InventoryCommands inventoryCommands;
+	ReserveItemCommandHandler reserveItemCommandHandler;
 
 	InventoryService(InventoryRepository inventoryRepository, DomainEventService eventService,
-			InventoryCommands inventoryCommands) {
+			ReserveItemCommandHandler reserveItemCommandHandler) {
 		this.inventoryRepository = inventoryRepository;
 		this.eventService = eventService;
-		this.inventoryCommands = inventoryCommands;
+		this.reserveItemCommandHandler = reserveItemCommandHandler;
 	}
 
-	void reserve(String sku, int qty) {
-		InventoryItem item = inventoryRepository.findBySku(sku)
-				.orElseThrow(() -> new RuntimeException("Item not found"));
+	void reserve(ReserveItemDto dto) throws ConcurrentUpdatesException {
 
-		int available = item.getAvailable();
-
-		if (0 >= qty) {
+		if (0 >= dto.getQty()) {
 			throw new RuntimeException("Invalid quantity requested.");
 		}
 
-		if (qty > available) {
-			throw new RuntimeException("Insufficient stock available.");
+		for (int i = 0; i < 3; i++) {
+
+			InventoryItem item = inventoryRepository.findBySku(dto.getSku())
+					.orElseThrow(() -> new RuntimeException("Item not found"));
+
+			var command = new ReserveItemCommand();
+			command.setSku(dto.getSku());
+			command.setQty(dto.getQty());
+			command.setExpectedVersion(item.getVersion());
+
+			if (dto.getQty() > item.getAvailable()) {
+				throw new RuntimeException("Insufficient stock available.");
+			}
+
+			var result = reserveItemCommandHandler.handle(command);
+			boolean success = result.isSuccess();
+
+			if (!success)
+				continue;
+
+			DomainEventDto event = new DomainEventDto(item.getSku(), "InventoryReserved",
+					"{\"sku\":\"" + dto.getSku() + "\", \"qty\":" + dto.getQty() + "}");
+
+			eventService.publishEvent(event);
+
+			return;
 		}
 
-		int updated = inventoryCommands.reserve(sku, qty, item.getVersion());
-
-		if (updated == 0) {
-			throw new RuntimeException("Optimistic lock failure");
-		}
-
-		DomainEventDto event = new DomainEventDto(item.getSku(), "InventoryReserved",
-				"{\"sku\":\"" + sku + "\", \"qty\":" + qty + "}");
-
-		eventService.publishEvent(event);
+		throw new ConcurrentUpdatesException();
 	}
+
 }

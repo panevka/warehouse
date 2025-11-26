@@ -17,9 +17,14 @@ class InventoryController {
 	}
 
 	@RequestMapping("/{sku}/reserve")
-	ResponseEntity<String> reserveItem(@PathVariable String sku, @RequestBody ReserveItemDto dto) {
-		int quantity = dto.getQty();
-		inventoryService.reserve(sku, quantity);
+	ResponseEntity<String> reserveItem(@PathVariable String sku,
+			@RequestBody ReserveItemRequestDto reserveItemDto) {
+
+		ReserveItemDto reserveItemDtoFull = new ReserveItemDto();
+		reserveItemDtoFull.setQty(reserveItemDto.getQty());
+		reserveItemDtoFull.setSku(sku);
+
+		inventoryService.reserve(reserveItemDtoFull);
 
 		return ResponseEntity.ok().body("ok");
 	}
