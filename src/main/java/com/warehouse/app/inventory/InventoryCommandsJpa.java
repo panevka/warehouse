@@ -13,7 +13,6 @@ public class InventoryCommandsJpa implements InventoryCommands {
 	private EntityManager em;
 
 	@Override
-	@Transactional
 	public int reserve(String sku, int qty, long expectedVersion) {
 		return em.createQuery("""
 				    UPDATE InventoryItem i
