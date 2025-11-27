@@ -1,5 +1,7 @@
 package com.warehouse.app.event;
 
+import java.time.Instant;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,12 +20,12 @@ public class Event {
 	@Column
 	String payload;
 	@Column
-	String createdAt;
+	Instant createdAt;
 
 	public Event() {
 	}
 
-	public Event(String sku, String type, String payload, String createdAt) {
+	public Event(String sku, String type, String payload, Instant createdAt) {
 		this.sku = sku;
 		this.type = type;
 		this.payload = payload;
@@ -62,11 +64,11 @@ public class Event {
 		this.payload = payload;
 	}
 
-	public String getCreatedAt() {
+	public Instant getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
 }

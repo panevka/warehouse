@@ -16,6 +16,6 @@ public class DomainEventService {
 	public void publishEvent(DomainEventDto event) {
 		Instant now = Instant.now();
 		domainEventRepository
-				.save(new Event(event.getSku(), event.getType(), event.getPayload(), now.toString()));
+				.save(new Event(event.getSku(), event.getType(), event.getPayload(), now));
 	}
 }
