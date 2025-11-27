@@ -3,10 +3,10 @@ package com.warehouse.app.event;
 public class DomainEventDto {
 
 	String sku;
-	String type;
+	EventType type;
 	String payload;
 
-	public DomainEventDto(String sku, String type, String payload) {
+	public DomainEventDto(String sku, EventType type, String payload) {
 		this.sku = sku;
 		this.type = type;
 		this.payload = payload;
@@ -20,11 +20,11 @@ public class DomainEventDto {
 		this.sku = sku;
 	}
 
-	public String getType() {
+	public EventType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(EventType type) {
 		this.type = type;
 	}
 

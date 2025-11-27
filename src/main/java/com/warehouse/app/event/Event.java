@@ -16,7 +16,7 @@ public class Event {
 	@Column
 	String sku;
 	@Column
-	String type;
+	EventType type;
 	@Column
 	String payload;
 	@Column
@@ -25,7 +25,7 @@ public class Event {
 	public Event() {
 	}
 
-	public Event(String sku, String type, String payload, Instant createdAt) {
+	public Event(String sku, EventType type, String payload, Instant createdAt) {
 		this.sku = sku;
 		this.type = type;
 		this.payload = payload;
@@ -48,11 +48,11 @@ public class Event {
 		this.sku = sku;
 	}
 
-	public String getType() {
+	public EventType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(EventType type) {
 		this.type = type;
 	}
 

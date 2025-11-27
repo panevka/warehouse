@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.warehouse.app.event.DomainEventDto;
 import com.warehouse.app.event.DomainEventService;
+import com.warehouse.app.event.EventType;
 import com.warehouse.app.inventory.commands.ReserveItemCommand;
 import com.warehouse.app.inventory.commands.ReserveItemCommandHandler;
 
@@ -51,7 +52,7 @@ class InventoryService {
 			if (!success)
 				continue;
 
-			DomainEventDto event = new DomainEventDto(item.getSku(), "InventoryReserved",
+			DomainEventDto event = new DomainEventDto(item.getSku(), EventType.ITEM_RESERVED,
 					"{\"sku\":\"" + dto.getSku() + "\", \"qty\":" + dto.getQty() + "}");
 
 			eventService.publishEvent(event);
