@@ -7,6 +7,8 @@ import com.warehouse.app.event.DomainEventService;
 import com.warehouse.app.inventory.commands.ReserveItemCommand;
 import com.warehouse.app.inventory.commands.ReserveItemCommandHandler;
 
+import jakarta.transaction.Transactional;
+
 @Service
 class InventoryService {
 	InventoryRepository inventoryRepository;
@@ -20,6 +22,8 @@ class InventoryService {
 		this.reserveItemCommandHandler = reserveItemCommandHandler;
 	}
 
+	@Transactional // transaction is not used for retry & optimistic locking, but for consistency
+			// with event publishing
 	void reserve(ReserveItemDto dto) throws ConcurrentUpdatesException {
 
 		if (0 >= dto.getQty()) {
@@ -40,6 +44,7 @@ class InventoryService {
 				throw new RuntimeException("Insufficient stock available.");
 			}
 
+			// also works without @Transactional & is atomic
 			var result = reserveItemCommandHandler.handle(command);
 			boolean success = result.isSuccess();
 
