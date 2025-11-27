@@ -60,14 +60,6 @@ Responses:
 * `409 CONFLICT` — concurrent modification after 3 retries.
 * `400/500` — invalid request or server error (insufficient stock -> 500 currently, see notes).
 
-* **Events**
-
-  * `com.warehouse.app.event.DomainEventService` and `com.warehouse.app.event.JpaDomainEventRepository` (`Event` JPA entity)
-    `DomainEventService.publishEvent` creates an `Event` entity and saves it via JPA. The `event` table stores immutable domain events with `payload` as JSON, `type`, `sku`, and `created_at`.
-
-* **Error handling**
-
-  * `com.warehouse.app.common.GlobalExceptionHandler` maps `ConcurrentUpdatesException` to `409 Conflict`.
 
 ## Core functionality and flow (step-by-step)
 
