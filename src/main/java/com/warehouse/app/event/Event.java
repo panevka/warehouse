@@ -12,15 +12,15 @@ import jakarta.persistence.Id;
 public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 	@Column
-	String sku;
+	private String sku;
 	@Column
-	EventType type;
+	private EventType type;
 	@Column
-	String payload;
+	private String payload;
 	@Column
-	Instant createdAt;
+	private Instant createdAt;
 
 	public Event() {
 	}

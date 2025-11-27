@@ -10,15 +10,15 @@ import jakarta.persistence.Id;
 public class InventoryItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
+	private int id;
 	@Column
-	String sku;
+	private String sku;
 	@Column
-	int available;
+	private int available;
 	@Column
-	int reserved;
+	private int reserved;
 	@Column
-	long version;
+	private long version;
 
 	public void reserve(int qty) {
 

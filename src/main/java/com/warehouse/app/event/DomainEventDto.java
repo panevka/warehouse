@@ -2,9 +2,9 @@ package com.warehouse.app.event;
 
 public class DomainEventDto {
 
-	String sku;
-	EventType type;
-	String payload;
+	private String sku;
+	private EventType type;
+	private String payload;
 
 	public DomainEventDto(String sku, EventType type, String payload) {
 		this.sku = sku;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DomainEventService {
 
-	DomainEventRepository domainEventRepository;
+	private final DomainEventRepository domainEventRepository;
 
 	public DomainEventService(DomainEventRepository domainEventRepository) {
 		this.domainEventRepository = domainEventRepository;
