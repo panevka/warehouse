@@ -13,8 +13,6 @@ It implements the rules below, constraints given by the external party requestin
 
 Project files live in the repo root. ADRs are under: `./docs/adr` (read the decision records there).
 
----
-
 ## Setup (exact steps)
 
 1. JDK: install Java 21.
@@ -45,8 +43,6 @@ Project files live in the repo root. ADRs are under: `./docs/adr` (read the deci
    java -jar target/app-*.jar
    ```
 
----
-
 ## How to call the service — example
 
 Reserve 5 units of SKU `ABC123`:
@@ -63,8 +59,6 @@ Responses:
 * `200 OK` and body `ok` — reservation succeeded.
 * `409 CONFLICT` — concurrent modification after 3 retries.
 * `400/500` — invalid request or server error (insufficient stock -> 500 currently, see notes).
-
----
 
 ## Code layout and relationships (concrete)
 
@@ -112,8 +106,6 @@ Files and responsibilities (follow the code):
 
   * `com.warehouse.app.common.GlobalExceptionHandler` maps `ConcurrentUpdatesException` to `409 Conflict`.
 
----
-
 ## Core functionality and flow (step-by-step)
 
 1. HTTP `POST /inventory/{sku}/reserve` with `{ "qty": N }`.
@@ -138,14 +130,10 @@ Files and responsibilities (follow the code):
 
 This is a read-then-conditional-write pattern using SQL CAS, with retries in the service layer.
 
----
-
 ## Important implementation points (explicit)
 
 * **Version field** is manually managed (`long version` on `InventoryItem`). No `@Version`, no JPA optimistic locking.
 * **CAS** is implemented with a single SQL `UPDATE ... WHERE sku = :sku AND version = :version`. This avoids explicit DB locks.
-
----
 
 ## Where to look in the code (quick pointers)
 
@@ -155,8 +143,6 @@ This is a read-then-conditional-write pattern using SQL CAS, with retries in the
 * Domain event: `src/main/java/com/warehouse/app/event/*`
 * Exception mapping (409): `src/main/java/com/warehouse/app/common/GlobalExceptionHandler.java`
 * ADRs: `./docs/adr` (contains design decisions and reasoning)
-
----
 
 ## ADRs
 
